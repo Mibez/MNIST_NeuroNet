@@ -40,15 +40,9 @@ int main()
 	printf("Type \"help\" to get help\n");
 	printf("Type \"about\" to learn more...\n");
 	char msg[30];
-	scanf("%s", msg);
-	char help[5] = "help";
-	char about[6] = "about";
-	int commandAmount = 5;
-	char commands[5][10] = {"load", "save", "run", "train", "exit"};
-	if(strcmp(msg, help) == 0) printHelp();
-	else if(strcmp(msg, about) == 0) printAbout();
-
-	printf("Please enter a command : ");
+	int commandAmount = 7;
+	char commands[7][6] = {"load", "save", "run", "train", "exit", "help", "about"};
+	printf("\nPlease enter a command : ");
 
 	// get user input and check for a match to known command until quit command received
 	int needToQuit = 0;
@@ -63,7 +57,7 @@ int main()
 		--cmdIndex;
 		if(cmdIndex != commandAmount) // cmd found
 		{
-			
+
 			switch(cmdIndex)
 			{
 				case 0: // load
@@ -87,27 +81,38 @@ int main()
 					break;
 				}
 				case 4: // quit
-				{	
+				{
 					printf("\nGoodbye\n");
 					quitNetwork();
 					needToQuit = 1;
+					break;
+				}
+				case 5: // help
+				{
+					printHelp();
+					break;
+				}
+				case 6: // about
+				{
+					printAbout();
 					break;
 				}
 
 			}
 		}
 //		printf("\033[A\r\33[2K\r"); // clear previous line
-		if(!needToQuit) printf("Please enter a command : ");
+		if(!needToQuit) printf("\nPlease enter a command : ");
 	}
 
 	return 0;
 }
 void printHelp()
 {
-	printf("\nHELP\n");
+	printf("\n\nMNIST NeuroNet help \n");
+	printf("\ntype \"about\" to learn about the commands\nand usage of this software\n\n");
 }
 
 void printAbout()
 {
-	printf("\nABOUT\n");
+	printf("\n ABOUT: this is a simple implementation of\na neural network that can learn to classify handwritten\ndigits.\n\nCommands:\ntrain  - train the network until predefined limit reached\nrun    - run a single handwritten digit through the network\nload   - load the network weights from a user-defined file\nsave   - save the network weights to a user-defined file\nhelp   - get help\nabout  - display this message\nexit   - clean up everything and close the program");
 }
