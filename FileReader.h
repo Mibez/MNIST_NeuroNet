@@ -1,3 +1,9 @@
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+// Title: FileReader.h
+// Author: Miikka Lukumies
+// Description: Header file for FileReader.c
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+
 #ifndef FILEREADER_H
 #define FILEREADER_H
 

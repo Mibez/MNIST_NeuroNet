@@ -1,6 +1,12 @@
-//TODO: visualization, UI, serialization
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Title: main.c
+// Author: Miikka Lukumies
+// Description: Main interface logic for MNIST_NeuroNet
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 // The definition of the neural network. Numbers of neurons in each layer
+// and learning parameters
 #define INPUT_SIZE 784
 #define HIDDEN_SIZE 30
 #define OUTPUT_SIZE 1
@@ -10,7 +16,7 @@
 
 
 // the size of the training set
-#define TRAINING_PATTERNS 60000
+#define TRAINING_PATTERNS 60
 
 
 #include <stdio.h>
@@ -21,14 +27,14 @@
 #include <fcntl.h>
 #include "NeuroNet.h"
 
-void PrintHelp();
-void PrintAbout();
+void printHelp();
+void printAbout();
 
 
 int main()
 {
-
-	StartNetwork(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, TRAINING_PATTERNS);
+	// allocate memory, load training sets, initialize everything
+	startNetwork(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, TRAINING_PATTERNS);
 
 	printf("Hello ! Welcome to use my Neural Network!\n\n");
 	printf("Type \"help\" to get help\n");
@@ -39,11 +45,12 @@ int main()
 	char about[6] = "about";
 	int commandAmount = 5;
 	char commands[5][10] = {"load", "save", "run", "train", "exit"};
-	if(strcmp(msg, help) == 0) PrintHelp();
-	else if(strcmp(msg, about) == 0) PrintAbout();
+	if(strcmp(msg, help) == 0) printHelp();
+	else if(strcmp(msg, about) == 0) printAbout();
 
 	printf("Please enter a command : ");
 
+	// get user input and check for a match to known command until quit command received
 	int needToQuit = 0;
 	while(!needToQuit)
 	{
@@ -61,28 +68,28 @@ int main()
 			{
 				case 0: // load
 				{
-					LoadNetwork();
+					loadNetwork();
 					break;
 				}
 				case 1: // save
 				{
-					SaveNetwork();
+					saveNetwork();
 					break;
 				}
 				case 2: // run
 				{
-					RunNetwork();
+					runNetwork();
 					break;
 				}
 				case 3: // train
 				{
-					TrainNetwork(LEARN_RATE, MOMENTUM, INIT_WEIGHT);
+					trainNetwork(LEARN_RATE, MOMENTUM, INIT_WEIGHT);
 					break;
 				}
 				case 4: // quit
 				{	
 					printf("\nGoodbye\n");
-					Quit();
+					quitNetwork();
 					needToQuit = 1;
 					break;
 				}
@@ -95,12 +102,12 @@ int main()
 
 	return 0;
 }
-void PrintHelp()
+void printHelp()
 {
 	printf("\nHELP\n");
 }
 
-void PrintAbout()
+void printAbout()
 {
 	printf("\nABOUT\n");
 }
