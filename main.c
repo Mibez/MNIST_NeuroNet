@@ -100,7 +100,6 @@ int main()
 
 			}
 		}
-//		printf("\033[A\r\33[2K\r"); // clear previous line
 		if(!needToQuit) printf("\nPlease enter a command : ");
 	}
 

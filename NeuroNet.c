@@ -287,7 +287,7 @@ double trainNetwork(double learnRate, double momentum, double initWeight)
 	needToStop = 0;
 
 	// initialize network parameters
-	eta = learnRate; 
+	eta = learnRate;
 	alpha = momentum;
 	smallWeight = initWeight;
 
@@ -295,15 +295,15 @@ double trainNetwork(double learnRate, double momentum, double initWeight)
 	error = 150.0;	// set this to >1 to enter the training loop
 
 	// initialize the weights with random numbers if the net is not deserialized
-	if(!networkIsLoaded)
+	if(!networkIsLoaded && !networkIsTrained)
 	{
 		initializeWeights();
 
 	}
 
 
-	printf("Learn rate : %f momentum : %f weight init coefficient : %f", eta, alpha, smallWeight);
-	printf("\nError  :\n");
+	printf("\n\n\nLearn rate : %f momentum : %f weight init coefficient : %f", eta, alpha, smallWeight);
+	printf("\nTraining the network...		Press Ctrl+C to stop\n\n\n");
 
 
 	int counter = 0;
@@ -333,7 +333,9 @@ double trainNetwork(double learnRate, double momentum, double initWeight)
 		counter++;
 
 		// print the cross-entropy error of the whole batch
-		printf("%f epoch : %d\n", error, counter);
+		printf("\033[A\r\33[2K\r");
+		printf("Cross-entropy error : %f Training iteration(epoch) : %d \n", error, counter);
+		if(!networkIsTrained) { networkIsTrained = 1;}
 	}
 
 	if(!needToStop)
