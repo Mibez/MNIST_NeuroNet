@@ -1,4 +1,4 @@
-TARGET = Neuro
+TARGET = neuro
 LIBS = -lm
 CC = gcc
 CFLAGS = -g -Wall -Wextra -std=c11
