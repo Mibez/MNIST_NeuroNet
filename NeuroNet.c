@@ -10,7 +10,6 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
-#include <fcntl.h>
 #include <signal.h>
 #include "FileReader.h"
 #include "NeuroNet.h"
@@ -263,6 +262,8 @@ int startNetwork(int inSize, int hidSize, int outSize, int tPats)
 
 	int errorMsg = initializeVariables();
 
+	// initialize random generator
+	srand(time(NULL));
 
 	// import training inputs and outputs
 	printf("Begin file import ... ");
