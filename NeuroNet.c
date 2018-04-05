@@ -58,6 +58,7 @@ double **deltaWeightHO;
 double **output;
 int *randomArray;
 int networkIsLoaded;
+int networkIsTrained;
 
 // flag for escaping training sequence
 volatile sig_atomic_t needToStop;
@@ -156,6 +157,7 @@ void loadNetwork()
 	if(!eofReached)
 	{
 		networkIsLoaded = 1;
+		networkIsTrained = 1;
 	}
 	else
 	{
@@ -207,33 +209,40 @@ void saveNetwork()
 // Runs the network with one pattern randomly selected from training set
 void runNetwork()
 {
-	// shuffle the patterns and pick one
-	shuffle();
-	int pattern = randomArray[4];
-
-	// forward-propagate the selected pattern through network
-	forwardPass(pattern);
-
-	// neat little visualization
-	for(int i = 0; i < inputSize; i++)
+	if(networkIsTrained)
 	{
+		// shuffle the patterns and pick one
+		shuffle();
+		int pattern = randomArray[4];
+
+		// forward-propagate the selected pattern through network
+		forwardPass(pattern);
+
+		// neat little visualization
+		for(int i = 0; i < inputSize; i++)
+		{
 		
-		if((inputVector[pattern][i]) == -0.5)
-		{
-			printf(" ");
-		}
-		else
-		{
-			printf("¤");
+			if((inputVector[pattern][i]) == -0.5)
+			{
+				printf(" ");
+			}
+			else
+			{
+				printf("¤");
 		}
 
 		if((i % 28) == 0) printf("\n");
 		
 		
-	}
+		}
 
-	// compare results
-	printf("\n Correct number : %d , Network's guess : %d \n", (int)round(targetOutput[pattern][1] * 10), (int)round(activationO[pattern][1] * 10));
+		// compare results
+		printf("\n Correct number : %d , Network's guess : %d \n", (int)round(targetOutput[pattern][1] * 10), (int)round(activationO[pattern][1] * 10));
+	}
+	else
+	{
+		printf("\nPlease train or load the network before running!\n");
+	}
 }
 
 // Clean up and quit gracefully
@@ -247,6 +256,7 @@ void quitNetwork()
 // Initialize the network with given parameters, import training data
 int startNetwork(int inSize, int hidSize, int outSize, int tPats)
 {
+	networkIsTrained = 0;
 	inputSize = inSize;
 	hiddenSize = hidSize;
 	outputSize = outSize;
