@@ -1,5 +1,5 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Title: main.c
+// Title: Neuro.c
 // Author: Miikka Lukumies
 // Description: Main interface logic for MNIST_NeuroNet
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
