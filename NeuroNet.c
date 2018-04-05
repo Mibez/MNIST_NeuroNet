@@ -132,7 +132,7 @@ void loadNetwork()
 			}
 		}
 	}
-	
+
 	for(int k = 1; k <= outputSize; k++)
 	{
 		for(int j = 0;  j <= hiddenSize; j++)
@@ -152,7 +152,7 @@ void loadNetwork()
 	}
 
 	printf("%d input-to-hidden , %d hidden-to-output weights loaded!\n", counter1, counter2);
-	
+
 	// check if the read terminated prematurely
 	if(!eofReached)
 	{
@@ -190,10 +190,9 @@ void saveNetwork()
 		{
 			counter1++;
 			fprintf(file, "%f ", weightIH[i][j]);
-			
 		}
 	}
-	
+
 	for(int k = 1; k <= outputSize; k++)
 	{
 		for(int j = 0; j <= hiddenSize; j++)
@@ -221,7 +220,7 @@ void runNetwork()
 		// neat little visualization
 		for(int i = 0; i < inputSize; i++)
 		{
-		
+
 			if((inputVector[pattern][i]) == -0.5)
 			{
 				printf(" ");
@@ -229,11 +228,10 @@ void runNetwork()
 			else
 			{
 				printf("¤");
-		}
+			}
 
-		if((i % 28) == 0) printf("\n");
-		
-		
+			if((i % 28) == 0) printf("\n");
+
 		}
 
 		// compare results
@@ -307,11 +305,11 @@ double trainNetwork(double learnRate, double momentum, double initWeight)
 	printf("Learn rate : %f momentum : %f weight init coefficient : %f", eta, alpha, smallWeight);
 	printf("\nError  :\n");
 
-	
+
 	int counter = 0;
 	// exit the training loop with Ctrl + C
-	signal(SIGINT, catchSignal); 
-	
+	signal(SIGINT, catchSignal);
+
 	// the training loop, terminates when desired error percentage is reached or on SIGINT
 	while((error > 0.1) && (!needToStop))
 	{
@@ -321,7 +319,7 @@ double trainNetwork(double learnRate, double momentum, double initWeight)
 			// go through all the training samples
 		for(int p = 1; p <= trainingPatterns; p++)
 		{
-			
+
 			int pattern = randomArray[p];
 
 			// go through the network and get the error
@@ -405,7 +403,7 @@ void freeMemory()
 // Allocate memory for all the network variables
 int initializeVariables()
 {
-	printf("%s", "\nInitializing variables...\n");
+	printf("%s", "\nInitializing variables...");
 
 	inputVector = (double **) calloc(trainingPatterns+3 , sizeof(double*));
 	if(!inputVector){return -1;}
@@ -415,7 +413,7 @@ int initializeVariables()
 
 	activationH = (double **) calloc(trainingPatterns+1 , sizeof(double*));
 	if(!activationH) {return -1;}
-	for(int i = 0; i < trainingPatterns+1; i++) 
+	for(int i = 0; i < trainingPatterns+1; i++)
 	{
 		activationH[i] = (double *) calloc(hiddenSize+1 , sizeof(double));
 		if(!activationH[i]) {return -1;}
@@ -506,21 +504,21 @@ double forwardPass(int p)
 			activationH[p][j] += inputVector[p][i] * weightIH[i][j];
 		}
 		// output of each neuron of the hidden layer
-		activationH[p][j] = sigmoidFunction(activationH[p][j]); 
+		activationH[p][j] = sigmoidFunction(activationH[p][j]);
 	}
 
 	// output layer
 	for(int k = 1; k <= outputSize; k++)
 	{
 		// get the neuron bias
-		activationO[p][k] = weightHO[k][0]; 
+		activationO[p][k] = weightHO[k][0];
 		for(int j = 1; j <= hiddenSize; j++)
 		{
 			// sum the products of all the inputs * corresponding weights
 			activationO[p][k] += activationH[p][j] * weightHO[k][j];
 		}
 		// output of the network
-		activationO[p][k] = sigmoidFunction(activationO[p][k]); 
+		activationO[p][k] = sigmoidFunction(activationO[p][k]);
 
 
 		double delta = targetOutput[p][k] - activationO[p][k];
@@ -592,7 +590,7 @@ void shuffle()
 double getRandom()
 {
 	return ((double)rand()/((double)RAND_MAX+1));
-} 
+}
 
 // Give initial values to all the weights
 void initializeWeights()

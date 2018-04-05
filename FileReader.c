@@ -31,7 +31,6 @@ int readFile(char *path, int width, int headerSize, int amount, double **destina
 
 	if(errorMessage == 0)
 	{
-		printf("\nReading file...");
 
 		fread(header, 1, headerSize, file); // skip the header
 
@@ -39,7 +38,6 @@ int readFile(char *path, int width, int headerSize, int amount, double **destina
 		{
 			fread(buffer[i], 1, width, file);
 		}
-		printf("Done!\n");
 
 		for(int i = 0; i < amount; i++)
 		{
